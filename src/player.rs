@@ -1,4 +1,4 @@
-struct player {
+struct Player {
   id: String,
   name: String,
   age: u8,
