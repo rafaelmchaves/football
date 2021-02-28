@@ -1,4 +1,4 @@
-enum Position {
+pub(crate) enum Position {
   GoalKeeper,
   RightBack,
   LeftBack,
