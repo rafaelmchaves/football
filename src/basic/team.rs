@@ -1,3 +1,6 @@
+use serde::{Serialize, Deserialize};
+
+#[derive(Serialize, Deserialize, Debug)]
 pub struct Team {
   pub id: String,
   pub name: String,
@@ -9,6 +12,7 @@ pub struct Team {
 
 }
 
+#[derive(Serialize, Deserialize, Debug)]
 pub enum Colors {
   WHITE,
   RED,

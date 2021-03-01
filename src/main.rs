@@ -1,21 +1,23 @@
+#![feature(proc_macro_hygiene, decl_macro)]
+
 mod basic;
 use crate::basic::player::Player;
 use crate::basic::position::Position;
 use crate::basic::team::{Team, Colors};
 
+use rocket_contrib::json::{Json};
+
+use serde::{Serialize, Deserialize};
+
+#[macro_use] extern crate rocket;
+
 fn main() {
-  println!("Hello, world!");
+  rocket::ignite().mount("/", routes![index]).launch();
+}
 
-  let player = Player {
-    id: "12321421".parse().unwrap(),
-    name: "Rafael".parse().unwrap(),
-    age: 17,
-    main_position: Position::GoalKeeper,
-    nation: "String".parse().unwrap(),
-  };
 
-  println!("id player {}", player.id);
-  println!("player name {}", player.name);
+#[get("/players", format = "json")]
+fn index() -> Json<Player> {
 
   let team = Team {
     id: "dsad".to_string(),
@@ -27,7 +29,18 @@ fn main() {
     nation: "Brazil".to_string()
   };
 
-  println!("team name {}", team.name);
-  println!("stadium name {}", team.stadium);
+  let player = Player {
+    id: "12321421".parse().unwrap(),
+    name: "Rafael".parse().unwrap(),
+    age: 17,
+    main_position: Position::GoalKeeper,
+    nation: "String".parse().unwrap(),
+    team,
+  };
 
+  println!("id player {}", player.id);
+  println!("player name {}", player.name);
+  println!("team name {}", player.team.name);
+
+  Json(player)
 }
