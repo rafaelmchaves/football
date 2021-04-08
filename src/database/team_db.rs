@@ -8,11 +8,11 @@ use mongodb::{
 };
 use mongodb::sync::Collection;
 
-pub fn getTeamByShortName(shortname: String) -> Result<TeamDb> {
+pub fn get_team_by_short_name(shortname: String) -> Result<TeamDb> {
 
     let coll = getCollection()?;
 
-    let mut cursor = coll.find(doc! {"short_name": shortname}, None)?;
+    let cursor = coll.find(doc! {"short_name": shortname}, None)?;
 
     let mut team: TeamDb = TeamDb {
         id: Default::default(),
@@ -33,7 +33,7 @@ pub fn getTeamByShortName(shortname: String) -> Result<TeamDb> {
     Ok(team)
 }
 
-fn getCollection() -> Result<Collection> {
+fn get_collection() -> Result<Collection> {
     let client =
         Client::with_uri_str("mongodb://localhost:27017")?;
 
