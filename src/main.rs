@@ -2,36 +2,24 @@
 
 mod basic;
 
-use crate::basic::player::Player;
-use crate::basic::position::Position;
+
 use crate::basic::team::{Team, Colors};
 
 mod database;
-use crate::database::team_db;
+mod web;
 
+use crate::database::team_db;
+use crate::web::player;
 use rocket_contrib::json::{Json};
 use rocket::request::Form;
 
 #[macro_use] extern crate rocket;
 
 fn main() {
-  rocket::ignite().mount("/", routes![index, teams, create_team]).launch();
+  rocket::ignite().mount("/", routes![player::get_players, teams, create_team]).launch();
 }
 
-#[get("/players", format = "json")]
-fn index() -> Json<Player> {
 
-  let player = Player {
-    id: "12321421".parse().unwrap(),
-    name: "Rafael".parse().unwrap(),
-    age: 17,
-    main_position: Position::GoalKeeper,
-    nation: "String".parse().unwrap(),
-    team: "".parse().unwrap()
-  };
-
-  Json(player)
-}
 
 #[get("/teams?<shortname>", format = "json")]
 fn teams(shortname: String) -> Json<Team> {
