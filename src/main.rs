@@ -23,7 +23,7 @@ fn main() {
 
 #[get("/teams?<shortname>", format = "json")]
 fn teams(shortname: String) -> Json<Team> {
-  let team_db = team_db::getTeamByShortName(shortname).unwrap();
+  let team_db = team_db::get_team_by_short_name(shortname).unwrap();
 
   let team = Team {
     id: team_db.id.to_hex(),
@@ -43,7 +43,7 @@ fn teams(shortname: String) -> Json<Team> {
 fn create_team(team_request: Form<TeamRequest>) -> Json<Team> {
 
   let team_req = team_request.shortname.clone();
-  let team_db = team_db::getTeamByShortName(team_req).unwrap();
+  let team_db = team_db::get_team_by_short_name(team_req).unwrap();
 
   let team = Team {
     id: team_db.id.to_hex(),

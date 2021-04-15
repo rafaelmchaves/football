@@ -8,32 +8,22 @@ use mongodb::{
 };
 use mongodb::sync::Collection;
 
-pub fn getTeamByShortName(shortname: String) -> Result<TeamDb> {
+pub fn get_team_by_short_name(shortname: String) -> Result<TeamDb> {
 
-    let coll = getCollection()?;
+    let coll = get_collection()?;
 
-    let mut cursor = coll.find(doc! {"short_name": shortname}, None)?;
+    let cursor = coll.find(doc! {"short_name": shortname}, None)?;
 
-    let mut team: TeamDb = TeamDb {
-        id: Default::default(),
-        name: "".to_string(),
-        short_name: "".to_string(),
-        color_1: "".to_string(),
-        color_2: "".to_string(),
-        stadium: "".to_string(),
-        president: "".to_string(),
-        nation: "".to_string()
-    };
+    let mut team_option: Option<TeamDb> = None;
 
     for result in cursor {
-        team = bson::from_bson(Bson::Document(result?))?;
-        println!("result {}", team.name);
+        team_option = Some(bson::from_bson(Bson::Document(result?))?);
     }
 
-    Ok(team)
+    Ok(team_option.unwrap())
 }
 
-fn getCollection() -> Result<Collection> {
+fn get_collection() -> Result<Collection> {
     let client =
         Client::with_uri_str("mongodb://localhost:27017")?;
 
@@ -46,6 +36,7 @@ fn getCollection() -> Result<Collection> {
 
 use serde::{Serialize, Deserialize};
 use bson::oid::ObjectId;
+use crate::basic::team::Team;
 
 #[derive(Serialize, Deserialize, Debug)]
 pub struct TeamDb {
