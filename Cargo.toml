@@ -20,3 +20,4 @@ features = ["json"]
 version = "1.1.1"
 default-features = false
 features = ["sync"]
+
