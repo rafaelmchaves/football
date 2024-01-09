@@ -1,0 +1,6 @@
+mongo:
+  image: mongo:4.2.2
+  volumes:
+    - /data/db
+  ports:
+    - "27017:27017"

@@ -1,43 +1,14 @@
 #![feature(proc_macro_hygiene, decl_macro)]
 
+mod web;
 mod basic;
-use crate::basic::player::Player;
-use crate::basic::position::Position;
-use crate::basic::team::{Team, Colors};
+mod database;
 
-use rocket_contrib::json::{Json};
+use crate::web::player_rest;
+use crate::web::team_rest;
 
 #[macro_use] extern crate rocket;
 
 fn main() {
-  rocket::ignite().mount("/", routes![index]).launch();
-}
-
-#[get("/players", format = "json")]
-fn index() -> Json<Player> {
-
-  let team = Team {
-    id: "dsad".to_string(),
-    name: "Cruzeiro".to_string(),
-    color_1: Colors::BLUE,
-    color_2: Colors::WHITE,
-    stadium: "Mineirao".to_string(),
-    president: "Crazy man".to_string(),
-    nation: "Brazil".to_string()
-  };
-
-  let player = Player {
-    id: "12321421".parse().unwrap(),
-    name: "Rafael".parse().unwrap(),
-    age: 17,
-    main_position: Position::GoalKeeper,
-    nation: "String".parse().unwrap(),
-    team,
-  };
-
-  println!("id player {}", player.id);
-  println!("player name {}", player.name);
-  println!("team name {}", player.team.name);
-
-  Json(player)
+  rocket::ignite().mount("/", routes![player_rest::get_players, team_rest::teams, team_rest::create_team]).launch();
 }

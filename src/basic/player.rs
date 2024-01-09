@@ -10,5 +10,5 @@ pub struct Player {
   pub(crate) age: u8,
   pub(crate) main_position: Position,
   pub(crate) nation: String,
-  pub team: Team,
+  pub(crate) team: String,
 }

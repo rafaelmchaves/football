@@ -4,6 +4,7 @@ use serde::{Serialize, Deserialize};
 pub struct Team {
   pub id: String,
   pub name: String,
+  pub shortname: String,
   pub color_1: Colors,
   pub color_2: Colors,
   pub stadium: String,

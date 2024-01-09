@@ -10,8 +10,14 @@ edition = "2018"
 ferris-says = "0.2"
 rocket = "0.4.7"
 serde = { version = "1.0", features = ["derive"] }
+bson = "1.2.0"
 
 [dependencies.rocket_contrib]
 default-features = false
 features = ["json"]
+
+[dependencies.mongodb]
+version = "1.1.1"
+default-features = false
+features = ["sync"]
 
